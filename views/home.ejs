@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head.ejs') %>
+    <title>Typora - Share Your Stories</title>
+    <style>
+      .hero-section {
+        padding: 5rem 0;
+        text-align: center;
+        color: white;
+      }
+
+      .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .hero-subtitle {
+        font-size: 1.35rem;
+        margin-bottom: 2.5rem;
+        opacity: 0.95;
+        font-weight: 400;
+      }
+
+      .hero-cta {
+        display: inline-flex;
+        gap: 1rem;
+      }
+
+      .blog-section {
+        background: white;
+        padding: 4rem 0;
+        margin-top: -2rem;
+        border-radius: 40px 40px 0 0;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--dark);
+      }
+
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--gray);
+      }
+
+      .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .empty-state-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1.1rem;
+        }
+
+        .blog-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-cta {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('./partials/nav.ejs') %>
+
+    <section class="hero-section">
+      <div class="container">
+        <h1 class="hero-title">Share Your Stories<br>With The World</h1>
+        <p class="hero-subtitle">Create, publish, and share your thoughts with a community of readers</p>
+        <div class="hero-cta">
+          <% if (!user) { %>
+            <a href="/user/signup" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Start Writing</a>
+            <a href="#blogs" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem; background: rgba(255, 255, 255, 0.2); border-color: white; color: white;">Explore Blogs</a>
+          <% } else { %>
+            <a href="/blog/add-new" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Create New Post</a>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <section class="blog-section" id="blogs">
+      <div class="container">
+        <h2 class="section-title">Latest Stories</h2>
+        
+        <% if (blogs && blogs.length > 0) { %>
+          <div class="blog-grid">
+            <% blogs.forEach(blog => { %>
+              <div class="card">
+                <img src="<%= blog.coverImageUrl %>" class="card-img" alt="<%= blog.title %>" />
+                <div class="card-body">
+                  <h3 class="card-title"><%= blog.title %></h3>
+                  <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read More →</a>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <h3 class="empty-state-title">No blogs yet</h3>
+            <p>Be the first to share your story!</p>
+            <% if (user) { %>
+              <a href="/blog/add-new" class="btn btn-primary" style="margin-top: 1rem;">Create First Post</a>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    </section>
+
+    <%- include('./partials/scripts.ejs') %>
+  </body>
+</html>

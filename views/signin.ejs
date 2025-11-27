@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head.ejs') %>
+    <title>Sign In - Typora</title>
+    <style>
+      .auth-section {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        padding: 3rem 0;
+      }
+
+      .auth-container {
+        max-width: 480px;
+        margin: 0 auto;
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .auth-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .auth-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+      }
+
+      .auth-subtitle {
+        color: var(--gray);
+        font-size: 1rem;
+      }
+
+      .auth-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .auth-link:hover {
+        text-decoration: underline;
+      }
+
+      .divider {
+        text-align: center;
+        margin: 2rem 0;
+        color: var(--gray);
+        position: relative;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        background: #e2e8f0;
+      }
+
+      .divider::before {
+        left: 0;
+      }
+
+      .divider::after {
+        right: 0;
+      }
+
+      .auth-footer {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        color: var(--gray);
+      }
+
+      @media (max-width: 768px) {
+        .auth-container {
+          padding: 2rem 1.5rem;
+        }
+
+        .auth-title {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/nav.ejs') %>
+
+    <section class="auth-section">
+      <div class="container">
+        <div class="auth-container">
+          <div class="auth-header">
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Sign in to continue your journey</p>
+          </div>
+
+          <form action="/user/signin" method="post">
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                id="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.05rem; padding: 0.875rem;">
+              Sign In
+            </button>
+          </form>
+
+          <div class="auth-footer">
+            Don't have an account? <a href="/user/signup" class="auth-link">Create one</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%- include('./partials/scripts.ejs') %>
+  </body>
+</html>
