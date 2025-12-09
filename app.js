@@ -15,9 +15,13 @@ const app = express();
 const PORT =process.env.PORT|| 8000;
 
 // DB CONNECTION
+
 mongoose
-  .connect(process.env.Mongo_URL)
-  .then(() => console.log("MongoDB Connected!!"));
+  .connect(process.env.Mongo_URL, {
+    dbName: "blogapp"
+  })
+  .then(() => console.log("MongoDB Connected!!"))
+  .catch((err) => console.error("DB Connection Error:", err));
 
 // VIEW ENGINE
 app.set("view engine", "ejs");
