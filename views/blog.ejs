@@ -170,11 +170,22 @@
     <div class="blog-header">
       <div class="container">
         <h1 class="blog-title"><%= blog.title %></h1>
+
         <div class="blog-meta">
-          <img src="<%= blog.createdBy.profileImageUrl %>" class="author-avatar" alt="<%= blog.createdBy.fullName %>" />
+          <!-- FIXED: Correct image path -->
+          <img 
+            src="/profile_images/<%= blog.createdBy.profileImageUrl %>" 
+            class="author-avatar" 
+            alt="<%= blog.createdBy.fullName %>" 
+          />
+
           <div class="author-info">
             <div class="author-name"><%= blog.createdBy.fullName %></div>
-            <div class="blog-date"><%= new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+            <div class="blog-date">
+              <%= new Date(blog.createdAt).toLocaleDateString('en-US', { 
+                year: 'numeric', month: 'long', day: 'numeric' 
+              }) %>
+            </div>
           </div>
         </div>
       </div>
@@ -190,7 +201,7 @@
     <div class="comments-section">
       <div class="container">
         <h2 class="comments-header">Comments (<%= comments.length %>)</h2>
-        
+
         <% if (locals.user) { %>
           <form action="/blog/comment/<%= blog._id %>" method="post" class="comment-form">
             <input
@@ -214,9 +225,17 @@
             <% comments.forEach(comment => { %>
               <div class="comment-card">
                 <div class="comment-header">
-                  <img src="<%= comment.createdBy.profileImageUrl %>" class="comment-avatar" alt="<%= comment.createdBy.fullName %>" />
+                  
+                  <!-- FIXED: Correct comment avatar path -->
+                  <img 
+                    src="/profile_images/<%= comment.createdBy.profileImageUrl %>" 
+                    class="comment-avatar" 
+                    alt="<%= comment.createdBy.fullName %>" 
+                  />
+
                   <span class="comment-author"><%= comment.createdBy.fullName %></span>
                 </div>
+
                 <div class="comment-content"><%= comment.content %></div>
               </div>
             <% }) %>
@@ -229,6 +248,6 @@
       </div>
     </div>
 
-    <%- include('./partials/scripts.ejs')%>
+    <%- include('./partials/scripts.ejs') %>
   </body>
 </html>
