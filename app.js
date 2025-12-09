@@ -12,13 +12,12 @@ const blogRoute = require("./routes/blog");
 const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 
 const app = express();
-const PORT =process.env.PORT|| 8000;
+const PORT = process.env.PORT || 8000;
 
 // DB CONNECTION
-
 mongoose
-  .connect(process.env.Mongo_URL, {
-    dbName: "blogapp"
+  .connect(process.env.MONGO_URL, {   // FIX: Ensure env is MONGO_URL
+    dbName: "blogapp",
   })
   .then(() => console.log("MongoDB Connected!!"))
   .catch((err) => console.error("DB Connection Error:", err));
@@ -30,11 +29,14 @@ app.set("views", path.resolve("./views"));
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Serve static public folder
 app.use(express.static(path.resolve("./public")));
 
+// ⭐ FIX: Serve uploaded profile images on Render
+app.use('/uploads', express.static(path.resolve('./uploads')));
 
-
-
+// Authentication cookie middleware
 app.use(checkForAuthenticationCookie("token"));
 
 // Make user available in ALL EJS files
