@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 8000;
 
 // DB CONNECTION
 mongoose
-  .connect(process.env.MONGO_URL, { 
+  .connect(process.env.Mongo_URL, { 
     dbName: "blogapp",
   })
   .then(() => console.log("MongoDB Connected!!"))
