@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -10,11 +12,11 @@ const blogRoute = require("./routes/blog");
 const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 
 const app = express();
-const PORT = 8000;
+const PORT =process.env.PORT|| 8000;
 
 // DB CONNECTION
 mongoose
-  .connect("mongodb://localhost:27017/typora")
+  .connect(process.env.Mongo_URL)
   .then(() => console.log("MongoDB Connected!!"));
 
 // VIEW ENGINE
